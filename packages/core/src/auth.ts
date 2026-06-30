@@ -32,6 +32,14 @@ interface CachedToken {
   expiresAtMs: number;
 }
 
+/** Metadados NÃO sensíveis de um token (seguros para log/diagnóstico). */
+export interface TokenInfo {
+  /** Tipo do token (normalmente "Bearer"). */
+  tokenType: string;
+  /** Segundos restantes até a expiração, a partir de agora. */
+  expiresInSeconds: number;
+}
+
 export interface TokenManagerOptions {
   config: SankhyaConfig;
   fetchImpl?: FetchLike;
@@ -66,6 +74,17 @@ export class TokenManager {
   async getAuthorizationHeader(): Promise<string> {
     const token = await this.getValidToken();
     return `${token.tokenType} ${token.accessToken}`;
+  }
+
+  /**
+   * Garante um token válido e retorna apenas seus metadados NÃO sensíveis
+   * (tipo e tempo até expirar). O JWT em si nunca é exposto. Útil para
+   * diagnóstico/preflight de credenciais.
+   */
+  async getTokenInfo(): Promise<TokenInfo> {
+    const token = await this.getValidToken();
+    const expiresInSeconds = Math.max(0, Math.round((token.expiresAtMs - this.clock()) / 1000));
+    return { tokenType: token.tokenType, expiresInSeconds };
   }
 
   /** Invalida o token cacheado, forçando renovação na próxima chamada. */

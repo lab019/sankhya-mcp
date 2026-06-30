@@ -9,6 +9,7 @@ export * from './http.js';
 export * from './auth.js';
 export * from './payloads.js';
 export * from './client.js';
+export * from './preflight.js';
 
 import {
   loadConfigFromEnv,

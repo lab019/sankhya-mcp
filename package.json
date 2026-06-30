@@ -17,7 +17,8 @@
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean && rimraf node_modules",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "validate:credentials": "node packages/core/dist/bin/validate-credentials.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
