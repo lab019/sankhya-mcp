@@ -103,6 +103,7 @@ Em vez de mapear **1 endpoint = 1 tool** (o que explodiria o contexto), usamos:
 | `SANKHYA_CLIENT_SECRET`      |     ✅      | —                         | Client Secret OAuth.                                   |
 | `SANKHYA_X_TOKEN`            |     ✅      | —                         | Token da aplicação (header `X-Token`).                 |
 | `SANKHYA_ENV`                |      —      | `sandbox`                 | `sandbox` ou `production`. Produção exige opt-in.      |
+| `SANKHYA_ALLOW_PRODUCTION`   |      —      | `false`                   | Opt-in do validador de credenciais para produção.      |
 | `SANKHYA_READ_ONLY`          |      —      | `false`                   | Bloqueia todas as operações de escrita.                |
 | `SANKHYA_DRY_RUN`            |      —      | `false`                   | Escritas apenas mostram o payload (não executam).      |
 | `SANKHYA_ALLOW_RAW_SQL`      |      —      | `false`                   | Habilita a tool `execute_query` (SQL livre, perigoso). |
@@ -139,6 +140,21 @@ node servers/mcp-core/dist/index.js
 
 Os servidores publicados expõem binários (`sankhya-mcp-core`, `sankhya-mcp-vendas`, …),
 então também podem ser iniciados via `npx @sankhya-mcp/mcp-core`.
+
+### Validar credenciais (preflight)
+
+Antes da demo/PoC, confirme que as credenciais de **sandbox** funcionam e que há
+dados de exemplo. Após `pnpm build`:
+
+```bash
+cp .env.example .env   # preencha SANKHYA_CLIENT_ID / _SECRET / _X_TOKEN (sandbox)
+pnpm validate:credentials
+```
+
+A ferramenta confirma que `POST /authenticate` retorna um JWT e que existem
+produtos/parceiros no ambiente. Nenhum segredo é impresso. Detalhes, opções e
+boas práticas de armazenamento seguro em
+[`docs/credenciais-sandbox.md`](./docs/credenciais-sandbox.md).
 
 ### Conectar a um cliente MCP
 
