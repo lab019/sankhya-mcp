@@ -1,0 +1,29 @@
+{
+  "//": "Exemplo de configuração para Claude Desktop (~/.config/Claude/claude_desktop_config.json ou equivalente no seu SO).",
+  "//credenciais": "NUNCA commite este arquivo com credenciais reais. Carregue apenas os servidores (domínios) que você precisa.",
+  "mcpServers": {
+    "sankhya-core": {
+      "command": "npx",
+      "args": ["-y", "@sankhya-mcp/mcp-core"],
+      "env": {
+        "SANKHYA_CLIENT_ID": "seu_client_id",
+        "SANKHYA_CLIENT_SECRET": "seu_client_secret",
+        "SANKHYA_X_TOKEN": "seu_x_token",
+        "SANKHYA_ENV": "sandbox",
+        "SANKHYA_READ_ONLY": "false",
+        "SANKHYA_DRY_RUN": "false",
+        "SANKHYA_ALLOW_RAW_SQL": "false"
+      }
+    },
+    "sankhya-vendas": {
+      "command": "npx",
+      "args": ["-y", "@sankhya-mcp/mcp-vendas"],
+      "env": {
+        "SANKHYA_CLIENT_ID": "seu_client_id",
+        "SANKHYA_CLIENT_SECRET": "seu_client_secret",
+        "SANKHYA_X_TOKEN": "seu_x_token",
+        "SANKHYA_ENV": "sandbox"
+      }
+    }
+  }
+}

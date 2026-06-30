@@ -1,0 +1,96 @@
+# Exemplo de docker-compose para os servidores Sankhya MCP.
+#
+# Servidores MCP usam transporte stdio: eles não expõem portas; o cliente MCP os
+# inicia como subprocessos. Este compose serve para BUILD das imagens e como
+# referência de configuração via env. Para uso com stdio, normalmente roda-se a
+# imagem com `docker run -i` diretamente a partir do cliente MCP.
+#
+# Credenciais: use um arquivo `.env` (NÃO commitado) ao lado deste compose.
+#   SANKHYA_CLIENT_ID=...
+#   SANKHYA_CLIENT_SECRET=...
+#   SANKHYA_X_TOKEN=...
+#
+# Build:  docker compose -f examples/docker-compose.yml build
+# Run:    docker run --rm -i --env-file examples/.env sankhya-mcp-core
+
+services:
+  mcp-core:
+    build:
+      context: ..
+      dockerfile: servers/mcp-core/Dockerfile
+    image: sankhya-mcp-core
+    stdin_open: true
+    tty: false
+    environment:
+      SANKHYA_CLIENT_ID: ${SANKHYA_CLIENT_ID}
+      SANKHYA_CLIENT_SECRET: ${SANKHYA_CLIENT_SECRET}
+      SANKHYA_X_TOKEN: ${SANKHYA_X_TOKEN}
+      SANKHYA_ENV: ${SANKHYA_ENV:-sandbox}
+      SANKHYA_READ_ONLY: ${SANKHYA_READ_ONLY:-false}
+      SANKHYA_DRY_RUN: ${SANKHYA_DRY_RUN:-false}
+      SANKHYA_ALLOW_RAW_SQL: ${SANKHYA_ALLOW_RAW_SQL:-false}
+
+  mcp-vendas:
+    build:
+      context: ..
+      dockerfile: servers/mcp-vendas/Dockerfile
+    image: sankhya-mcp-vendas
+    stdin_open: true
+    tty: false
+    environment:
+      SANKHYA_CLIENT_ID: ${SANKHYA_CLIENT_ID}
+      SANKHYA_CLIENT_SECRET: ${SANKHYA_CLIENT_SECRET}
+      SANKHYA_X_TOKEN: ${SANKHYA_X_TOKEN}
+      SANKHYA_ENV: ${SANKHYA_ENV:-sandbox}
+
+  mcp-financeiro:
+    build:
+      context: ..
+      dockerfile: servers/mcp-financeiro/Dockerfile
+    image: sankhya-mcp-financeiro
+    stdin_open: true
+    tty: false
+    environment:
+      SANKHYA_CLIENT_ID: ${SANKHYA_CLIENT_ID}
+      SANKHYA_CLIENT_SECRET: ${SANKHYA_CLIENT_SECRET}
+      SANKHYA_X_TOKEN: ${SANKHYA_X_TOKEN}
+      SANKHYA_ENV: ${SANKHYA_ENV:-sandbox}
+
+  mcp-suprimentos:
+    build:
+      context: ..
+      dockerfile: servers/mcp-suprimentos/Dockerfile
+    image: sankhya-mcp-suprimentos
+    stdin_open: true
+    tty: false
+    environment:
+      SANKHYA_CLIENT_ID: ${SANKHYA_CLIENT_ID}
+      SANKHYA_CLIENT_SECRET: ${SANKHYA_CLIENT_SECRET}
+      SANKHYA_X_TOKEN: ${SANKHYA_X_TOKEN}
+      SANKHYA_ENV: ${SANKHYA_ENV:-sandbox}
+
+  mcp-rh:
+    build:
+      context: ..
+      dockerfile: servers/mcp-rh/Dockerfile
+    image: sankhya-mcp-rh
+    stdin_open: true
+    tty: false
+    environment:
+      SANKHYA_CLIENT_ID: ${SANKHYA_CLIENT_ID}
+      SANKHYA_CLIENT_SECRET: ${SANKHYA_CLIENT_SECRET}
+      SANKHYA_X_TOKEN: ${SANKHYA_X_TOKEN}
+      SANKHYA_ENV: ${SANKHYA_ENV:-sandbox}
+
+  mcp-cadastros:
+    build:
+      context: ..
+      dockerfile: servers/mcp-cadastros/Dockerfile
+    image: sankhya-mcp-cadastros
+    stdin_open: true
+    tty: false
+    environment:
+      SANKHYA_CLIENT_ID: ${SANKHYA_CLIENT_ID}
+      SANKHYA_CLIENT_SECRET: ${SANKHYA_CLIENT_SECRET}
+      SANKHYA_X_TOKEN: ${SANKHYA_X_TOKEN}
+      SANKHYA_ENV: ${SANKHYA_ENV:-sandbox}

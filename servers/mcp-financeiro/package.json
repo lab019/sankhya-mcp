@@ -1,0 +1,30 @@
+{
+  "name": "@sankhya-mcp/mcp-financeiro",
+  "version": "0.1.0",
+  "description": "Servidor MCP do domínio Financeiro (Sankhya): cadastros e movimentos financeiros, baixas de títulos e contas. Esqueleto pronto para preenchimento.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "sankhya-mcp-financeiro": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "clean": "rimraf dist .turbo"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@sankhya-mcp/core": "workspace:*",
+    "@sankhya-mcp/data-dictionary": "workspace:*",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
